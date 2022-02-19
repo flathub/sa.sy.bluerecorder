@@ -74,5 +74,5 @@ modules:
       - --enable-libvorbis
     sources:
       - type: archive
-        url: http://www.ffmpeg.org/releases/ffmpeg-4.3.2.tar.xz
-        md5: 29529337d9b8f794a6142db10b717ec5
+        url: http://www.ffmpeg.org/releases/ffmpeg-5.0.tar.xz
+        md5: be3a9c73f7b492cd98301ac2086f0862
