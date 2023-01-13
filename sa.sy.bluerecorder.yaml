@@ -49,7 +49,7 @@ modules:
     sources: 
       - type: archive
         url: https://xorg.freedesktop.org/archive/individual/app/xwininfo-1.1.5.tar.bz2
-        md5: 26d46f7ef0588d3392da3ad5802be420
+        sha256: 7a405441dfc476666c744f5fcd1bc8a75abf8b5b1d85db7b88b370982365080e
 
   - name: libx264
     config-opts:
@@ -58,7 +58,7 @@ modules:
     sources:
       - type: git
         url: https://code.videolan.org/videolan/x264.git
-        branch: stable
+        commit: baee400fa9ced6f5481a728138fed6e867b0ff7f
 
   - name: ffmpeg
     config-opts:
@@ -77,4 +77,4 @@ modules:
     sources:
       - type: archive
         url: http://www.ffmpeg.org/releases/ffmpeg-5.0.2.tar.xz
-        md5: e52d9994afea2c9466fb261897d6ea90
+        sha256: 9a0b036b4b9049cae6c6fb2634b2763ecab16c0af34ddc5a737ab2db5cdc1dfe
