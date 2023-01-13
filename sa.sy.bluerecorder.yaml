@@ -1,10 +1,10 @@
 app-id: sa.sy.bluerecorder
 runtime: org.gnome.Platform
-runtime-version: "42"
+runtime-version: "43"
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.llvm13
+  - org.freedesktop.Sdk.Extension.llvm15
 cleanup:
   - /share/man
   - /share/doc
@@ -25,8 +25,8 @@ modules:
   - name: bluerecorder
     buildsystem: simple
     build-options:
-      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm13/bin
-      prepend-ld-library-path: /usr/lib/sdk/llvm13/lib
+      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm15/bin
+      prepend-ld-library-path: /usr/lib/sdk/llvm15/lib
       env:
         CARGO_HOME: "/run/build/bluerecorder/cargo"
         RUST_BACKTRACE: "1"
@@ -43,13 +43,13 @@ modules:
       - cargo-sources.json
       - type: git
         url: https://github.com/xlmnxp/blue-recorder.git
-        commit: b365de8aa39be8fe8e68debac48d3b11801f4c3b
+        commit: 66c16a3fb4251f4942d28877af0ea4f5fd4e52d9
 
   - name: xwininfo
     sources: 
       - type: archive
         url: https://xorg.freedesktop.org/archive/individual/app/xwininfo-1.1.5.tar.bz2
-        md5: 26d46f7ef0588d3392da3ad5802be420
+        sha256: 7a405441dfc476666c744f5fcd1bc8a75abf8b5b1d85db7b88b370982365080e
 
   - name: libx264
     config-opts:
@@ -58,7 +58,7 @@ modules:
     sources:
       - type: git
         url: https://code.videolan.org/videolan/x264.git
-        branch: stable
+        commit: baee400fa9ced6f5481a728138fed6e867b0ff7f
 
   - name: ffmpeg
     config-opts:
@@ -76,5 +76,5 @@ modules:
       - --enable-libvorbis
     sources:
       - type: archive
-        url: http://www.ffmpeg.org/releases/ffmpeg-5.0.1.tar.xz
-        md5: c9541d321f08021d28503d89956e80dd
+        url: http://www.ffmpeg.org/releases/ffmpeg-5.0.2.tar.xz
+        sha256: 9a0b036b4b9049cae6c6fb2634b2763ecab16c0af34ddc5a737ab2db5cdc1dfe
