@@ -1,10 +1,10 @@
 app-id: sa.sy.bluerecorder
 runtime: org.gnome.Platform
-runtime-version: "42"
+runtime-version: "43"
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.llvm13
+  - org.freedesktop.Sdk.Extension.llvm15
 cleanup:
   - /share/man
   - /share/doc
@@ -25,8 +25,8 @@ modules:
   - name: bluerecorder
     buildsystem: simple
     build-options:
-      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm13/bin
-      prepend-ld-library-path: /usr/lib/sdk/llvm13/lib
+      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm15/bin
+      prepend-ld-library-path: /usr/lib/sdk/llvm15/lib
       env:
         CARGO_HOME: "/run/build/bluerecorder/cargo"
         RUST_BACKTRACE: "1"
@@ -43,7 +43,7 @@ modules:
       - cargo-sources.json
       - type: git
         url: https://github.com/xlmnxp/blue-recorder.git
-        commit: b365de8aa39be8fe8e68debac48d3b11801f4c3b
+        commit: 66c16a3fb4251f4942d28877af0ea4f5fd4e52d9
 
   - name: xwininfo
     sources: 
