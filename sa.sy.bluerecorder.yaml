@@ -1,10 +1,10 @@
 app-id: sa.sy.bluerecorder
 runtime: org.gnome.Platform
-runtime-version: "44"
+runtime-version: "45"
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.llvm15
+  - org.freedesktop.Sdk.Extension.llvm16
 cleanup:
   - /share/man
   - /share/doc
@@ -42,8 +42,9 @@ modules:
     sources:
       - cargo-sources.json
       - type: git
-        url: https://github.com/xlmnxp/blue-recorder.git
-        commit: 7a9806e8b8ac8919f5d567fa19f53c0240a29ee2
+        url: https://github.com/ochibani/blue-recorder.git
+        branch: blue-recorder-gtk4
+        commit: 4e4756e88a83dc76bad0eedad7e723e13e63849a
 
   - name: xwininfo
     sources: 
@@ -78,3 +79,5 @@ modules:
       - type: archive
         url: http://www.ffmpeg.org/releases/ffmpeg-6.0.tar.xz
         sha256: 57be87c22d9b49c112b6d24bc67d42508660e6b718b3db89c44e47e289137082
+      - type: patch
+        path : Fixes-assembling-with-binutil-as-2-41.patch
