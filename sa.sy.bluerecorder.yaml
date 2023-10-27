@@ -13,6 +13,7 @@ command: /app/opt/blue-recorder
 finish-args:
   - --filesystem=home
   - --share=ipc
+  - --socket=wayland
   - --socket=x11
   - --socket=pulseaudio
   - --device=dri
@@ -45,7 +46,7 @@ modules:
       - type: git
         url: https://github.com/ochibani/blue-recorder.git
         branch: blue-recorder-gtk4
-        commit: 4e4756e88a83dc76bad0eedad7e723e13e63849a
+        commit: 591a671a8d08f484fd0e761865cf584316b6a630
 
   - name: xwininfo
     sources: 
