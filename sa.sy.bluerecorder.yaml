@@ -16,6 +16,7 @@ finish-args:
   - --socket=x11
   - --socket=pulseaudio
   - --device=dri
+  - --filesystem=xdg-run/pipewire-0
   - --talk-name=org.gnome.Shell.Screencast
   - --talk-name=org.kde.StatusNotifierWatcher
 modules:
@@ -81,3 +82,25 @@ modules:
         sha256: 57be87c22d9b49c112b6d24bc67d42508660e6b718b3db89c44e47e289137082
       - type: patch
         path : Fixes-assembling-with-binutil-as-2-41.patch
+
+  - name: gstreamer
+    buildsystem: meson
+    config-opts:
+      - -Ddoc=disabled
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.22.6/gstreamer-1.22.6.tar.gz
+        sha256: 88d63e6610c95e940c6aa871ea8ef26d0842678e8dfb69eb7a7217b47caffdf7
+
+  - name: gst-plugin-pipewire
+    buildsystem: meson
+    config-opts:
+      - -Ddocs=disabled
+      - -Djack-devel=false
+      - -Dselinux=disabled
+      - -Dsession-managers=[]
+      - -Dudevrulesdir=/app/lib/udev
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/0.3.83/pipewire-0.3.83.tar.gz
+        sha256: b681bbf590cd02deec41802444ba5b05fe4df3e497eaa80260d1c5f7bb830bda
