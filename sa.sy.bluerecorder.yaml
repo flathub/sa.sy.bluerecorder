@@ -46,7 +46,7 @@ modules:
       - type: git
         url: https://github.com/ochibani/blue-recorder.git
         branch: blue-recorder-gtk4
-        commit: 591a671a8d08f484fd0e761865cf584316b6a630
+        commit: d10fdf7c0a9a61fcfcefb2b7e8878461cdd862e6
 
   - name: xwininfo
     sources: 
