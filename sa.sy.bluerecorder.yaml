@@ -1,10 +1,10 @@
 app-id: sa.sy.bluerecorder
 runtime: org.gnome.Platform
-runtime-version: "44"
+runtime-version: "45"
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.llvm15
+  - org.freedesktop.Sdk.Extension.llvm16
 cleanup:
   - /share/man
   - /share/doc
@@ -13,10 +13,12 @@ command: /app/opt/blue-recorder
 finish-args:
   - --filesystem=home
   - --share=ipc
+  - --socket=wayland
   - --socket=x11
   - --socket=pulseaudio
   - --device=dri
-  - --talk-name=org.gnome.Shell.Screencast
+  - --filesystem=xdg-run/pipewire-0
+  - --talk-name=org.freedesktop.portal.ScreenCast
   - --talk-name=org.kde.StatusNotifierWatcher
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
@@ -42,8 +44,9 @@ modules:
     sources:
       - cargo-sources.json
       - type: git
-        url: https://github.com/xlmnxp/blue-recorder.git
-        commit: 7a9806e8b8ac8919f5d567fa19f53c0240a29ee2
+        url: https://github.com/ochibani/blue-recorder.git
+        branch: blue-recorder-gtk4
+        commit: d10fdf7c0a9a61fcfcefb2b7e8878461cdd862e6
 
   - name: xwininfo
     sources: 
@@ -78,3 +81,27 @@ modules:
       - type: archive
         url: http://www.ffmpeg.org/releases/ffmpeg-6.0.tar.xz
         sha256: 57be87c22d9b49c112b6d24bc67d42508660e6b718b3db89c44e47e289137082
+      - type: patch
+        path : Fixes-assembling-with-binutil-as-2-41.patch
+
+  - name: gstreamer
+    buildsystem: meson
+    config-opts:
+      - -Ddoc=disabled
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.22.6/gstreamer-1.22.6.tar.gz
+        sha256: 88d63e6610c95e940c6aa871ea8ef26d0842678e8dfb69eb7a7217b47caffdf7
+
+  - name: gst-plugin-pipewire
+    buildsystem: meson
+    config-opts:
+      - -Ddocs=disabled
+      - -Djack-devel=false
+      - -Dselinux=disabled
+      - -Dsession-managers=[]
+      - -Dudevrulesdir=/app/lib/udev
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/0.3.83/pipewire-0.3.83.tar.gz
+        sha256: b681bbf590cd02deec41802444ba5b05fe4df3e497eaa80260d1c5f7bb830bda
