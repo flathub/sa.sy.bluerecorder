@@ -45,7 +45,7 @@ modules:
       - type: git
         url: https://github.com/xlmnxp/blue-recorder.git
         branch: master
-        commit: 0ec73e5bbb20ac4e1b7c57e2ea8ba9c7e61b4e39
+        commit: 77d0c8a0e4bdb4731053fafeb57e351b67ed128c
 
   - name: xwininfo
     sources: 
