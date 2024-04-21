@@ -44,8 +44,7 @@ modules:
       - cargo-sources.json
       - type: git
         url: https://github.com/xlmnxp/blue-recorder.git
-        branch: master
-        commit: 77d0c8a0e4bdb4731053fafeb57e351b67ed128c
+        commit: 5dbba2d4f449868dc1e2bf9f245b6943e9bd46bc
 
   - name: xwininfo
     sources: 
