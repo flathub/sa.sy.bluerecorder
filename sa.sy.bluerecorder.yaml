@@ -19,7 +19,6 @@ finish-args:
   - --device=dri
   - --filesystem=xdg-run/pipewire-0
   - --talk-name=org.kde.StatusNotifierWatcher
-  - --own-name=sa.sy.blue-recorder
 modules:
   - name: bluerecorder
     buildsystem: simple
