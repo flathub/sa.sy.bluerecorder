@@ -1,15 +1,15 @@
 app-id: sa.sy.bluerecorder
 runtime: org.gnome.Platform
-runtime-version: "45"
+runtime-version: "50"
 sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.llvm16
+  - org.freedesktop.Sdk.Extension.llvm20
 cleanup:
   - /share/man
   - /share/doc
   - /share/gtk-doc
-command: /app/opt/blue-recorder
+command: blue-recorder
 finish-args:
   - --filesystem=home
   - --share=ipc
@@ -18,35 +18,31 @@ finish-args:
   - --socket=pulseaudio
   - --device=dri
   - --filesystem=xdg-run/pipewire-0
-  - --talk-name=org.freedesktop.portal.ScreenCast
   - --talk-name=org.kde.StatusNotifierWatcher
 modules:
-  - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
-  - shared-modules/dbus-glib/dbus-glib.json
-
   - name: bluerecorder
     buildsystem: simple
     build-options:
-      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm15/bin
-      prepend-ld-library-path: /usr/lib/sdk/llvm15/lib
+      append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm20/bin
+      prepend-ld-library-path: /usr/lib/sdk/llvm20/lib
       env:
         CARGO_HOME: "/run/build/bluerecorder/cargo"
         RUST_BACKTRACE: "1"
     build-commands:
-      - mkdir -p $FLATPAK_DEST/opt $FLATPAK_DEST/share/icons/hicolor/128x128/apps/
+      - mkdir -p $FLATPAK_DEST/bin $FLATPAK_DEST/opt $FLATPAK_DEST/share/icons/hicolor/128x128/apps/
       - install -D flatpak/sa.sy.bluerecorder.metainfo.xml -t $FLATPAK_DEST/share/metainfo/
       - install -D flatpak/sa.sy.bluerecorder.desktop -t $FLATPAK_DEST/share/applications/
       - cp -v data/blue-recorder@x128.png $FLATPAK_DEST/share/icons/hicolor/128x128/apps/sa.sy.bluerecorder.png
-      - cargo --offline fetch --manifest-path Cargo.toml --verbose 
+      - cargo --offline fetch --manifest-path Cargo.toml --verbose
       - cargo --offline build --release --verbose
-      - cp target/release/blue-recorder $FLATPAK_DEST/opt 
-      - cp -a data interfaces po $FLATPAK_DEST/opt
+      - cp target/release/blue-recorder $FLATPAK_DEST/opt
+      - cp -a data gui/interfaces locales $FLATPAK_DEST/opt
+      - ln -s ../opt/blue-recorder $FLATPAK_DEST/bin/blue-recorder
     sources:
       - cargo-sources.json
       - type: git
         url: https://github.com/xlmnxp/blue-recorder.git
-        branch: master
-        commit: 0ec73e5bbb20ac4e1b7c57e2ea8ba9c7e61b4e39
+        commit: 6362101905b196170890b83eb53de854748f1461
 
   - name: xwininfo
     sources: 
@@ -77,21 +73,13 @@ modules:
       - --enable-libx264
       - --enable-version3
       - --enable-libvorbis
+      - --enable-libopus
     sources:
       - type: archive
         url: http://www.ffmpeg.org/releases/ffmpeg-6.0.tar.xz
         sha256: 57be87c22d9b49c112b6d24bc67d42508660e6b718b3db89c44e47e289137082
       - type: patch
         path : Fixes-assembling-with-binutil-as-2-41.patch
-
-  - name: gstreamer
-    buildsystem: meson
-    config-opts:
-      - -Ddoc=disabled
-    sources:
-      - type: archive
-        url: https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.22.6/gstreamer-1.22.6.tar.gz
-        sha256: 88d63e6610c95e940c6aa871ea8ef26d0842678e8dfb69eb7a7217b47caffdf7
 
   - name: gst-plugin-pipewire
     buildsystem: meson
