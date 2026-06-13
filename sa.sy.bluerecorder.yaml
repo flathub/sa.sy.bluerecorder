@@ -9,17 +9,15 @@ cleanup:
   - /share/man
   - /share/doc
   - /share/gtk-doc
-command: /app/opt/blue-recorder
+command: blue-recorder
 finish-args:
   - --filesystem=home
   - --share=ipc
   - --socket=wayland
   - --socket=x11
   - --socket=pulseaudio
-  - --socket=session-bus
   - --device=dri
   - --filesystem=xdg-run/pipewire-0
-  - --talk-name=org.freedesktop.portal.ScreenCast
   - --talk-name=org.kde.StatusNotifierWatcher
 modules:
   - name: bluerecorder
@@ -31,19 +29,19 @@ modules:
         CARGO_HOME: "/run/build/bluerecorder/cargo"
         RUST_BACKTRACE: "1"
     build-commands:
-      - mkdir -p $FLATPAK_DEST/opt $FLATPAK_DEST/share/icons/hicolor/128x128/apps/
+      - mkdir -p $FLATPAK_DEST/bin $FLATPAK_DEST/opt $FLATPAK_DEST/share/icons/hicolor/128x128/apps/
       - install -D flatpak/sa.sy.bluerecorder.metainfo.xml -t $FLATPAK_DEST/share/metainfo/
       - install -D flatpak/sa.sy.bluerecorder.desktop -t $FLATPAK_DEST/share/applications/
       - cp -v data/blue-recorder@x128.png $FLATPAK_DEST/share/icons/hicolor/128x128/apps/sa.sy.bluerecorder.png
-      - cargo --offline fetch --manifest-path Cargo.toml --verbose 
+      - cargo --offline fetch --manifest-path Cargo.toml --verbose
       - cargo --offline build --release --verbose
       - cp target/release/blue-recorder $FLATPAK_DEST/opt
       - cp -a data gui/interfaces locales $FLATPAK_DEST/opt
+      - ln -s ../opt/blue-recorder $FLATPAK_DEST/bin/blue-recorder
     sources:
       - cargo-sources.json
       - type: git
         url: https://github.com/xlmnxp/blue-recorder.git
-        branch: master
         commit: 69278cb67c28b34028e146b36a0c3b285071b7ac
 
   - name: xwininfo
